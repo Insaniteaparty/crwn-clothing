@@ -1,9 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
-import { UserContext } from "../../contexts/user.context";
 import {
   signInWithGooglePopup,
-  crateUserDocumentFromAuth,
   signInAuthUserWithEmailAndPsw,
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
@@ -20,12 +18,9 @@ const initFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(initFields);
   const { email, password } = formFields;
-  const { setCurrentUser } = useContext(UserContext);
 
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
-    setCurrentUser(user);
-    await crateUserDocumentFromAuth(user);
   };
 
   const resetFormFields = () => {
@@ -40,15 +35,15 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { user } = await signInAuthUserWithEmailAndPsw(email, password);
-      setCurrentUser(user);
+      await signInAuthUserWithEmailAndPsw(email, password);
       resetFormFields();
     } catch (error) {
       if (
         error.code === "auth/wrong-password" ||
-        error.code === "auth.user-not-found"
+        error.code === "auth/user-not-found" ||
+        error.code === "auth/invalid-credential"
       ) {
-        alert("Warning: wrong useername or password!");
+        alert("Warning: wrong username or password!");
       } else console.log(error.message);
     }
   };
