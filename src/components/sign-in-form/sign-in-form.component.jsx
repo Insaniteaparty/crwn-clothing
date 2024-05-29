@@ -20,7 +20,7 @@ const SignInForm = () => {
   const { email, password } = formFields;
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
+    await signInWithGooglePopup();
   };
 
   const resetFormFields = () => {
