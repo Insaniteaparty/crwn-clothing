@@ -5,7 +5,9 @@ import {
   signInAuthUserWithEmailAndPsw,
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import CustomButton from "../custom-button/custom-botton.component";
+import CustomButton, {
+  BUTTON_TYPE_CLASS,
+} from "../custom-button/custom-botton.component";
 
 // I'll cheat and use sign-up's style
 import "../sign-up-form/sign-up-form.styles.scss";
@@ -73,7 +75,7 @@ const SignInForm = () => {
           <CustomButton type="submit">Sign In</CustomButton>
           <CustomButton
             type="button"
-            buttonType="google"
+            buttonType={BUTTON_TYPE_CLASS.google}
             onClick={logGoogleUser}
           >
             google sign in
