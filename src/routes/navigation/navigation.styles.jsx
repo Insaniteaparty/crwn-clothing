@@ -12,7 +12,7 @@ export const NavigationContainer = styled.div`
 
 export const LogoContainer = styled(Link)`
   height: 100%;
-  width: 70px;
+  min-width: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,4 +29,14 @@ export const NavLinksContainer = styled.div`
 export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
+`;
+
+export const Leading = styled.div`
+  display: flex;
+  gap: 2rem;
+  padding-left: 0.5rem;
+
+  h2 {
+    cursor: pointer;
+  }
 `;
