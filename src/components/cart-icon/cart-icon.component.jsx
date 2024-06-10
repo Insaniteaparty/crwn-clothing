@@ -1,16 +1,18 @@
-import { useContext } from "react";
-
 import { CartIconContainer, ItemCount } from "./cart-icon.styles";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 
-import { CartContext } from "../../contexts/cart.context";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCartCount,
+  selectIsCartOpen,
+} from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 const CartIcon = () => {
-  const { isCartOpen, setIsCartOpen, totalItems } = useContext(CartContext);
-  const isOpenToggle = () => {
-    setIsCartOpen(!isCartOpen);
-  };
-
+  const dispatch = useDispatch();
+  const isCartOpen = useSelector(selectIsCartOpen);
+  const totalItems = useSelector(selectCartCount);
+  const isOpenToggle = () => dispatch(setIsCartOpen(!isCartOpen));
   return (
     <CartIconContainer onClick={isOpenToggle}>
       <ShoppingIcon className="shopping-icon" />

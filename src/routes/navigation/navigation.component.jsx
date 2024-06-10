@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
-import { Fragment, useContext } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
 
-import { UserContext } from "../../contexts/user.context";
+import { useSelector } from "react-redux";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
@@ -12,20 +12,34 @@ import {
   LogoContainer,
   NavLinksContainer,
   NavLink,
+  Leading,
 } from "./navigation.styles";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-import { CartContext } from "../../contexts/cart.context";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
-  const { isCartOpen } = useContext(CartContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
+  const [isHomepage, setIsHomepage] = useState(true);
 
+  useEffect(() => {
+    const isThisAnHomepage = window.location.pathname === "/";
+    setIsHomepage(isThisAnHomepage);
+  }, [location]);
+
+  const navigateBack = () => navigate(-1);
   return (
     <Fragment>
       <NavigationContainer>
-        <LogoContainer to="/">
-          <CrownLogo className="logo" />
-        </LogoContainer>
+        <Leading>
+          {!isHomepage && <h2 onClick={navigateBack}>&#10094;</h2>}
+          <LogoContainer to="/">
+            <CrownLogo className="logo" />
+          </LogoContainer>
+        </Leading>
         <NavLinksContainer>
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (

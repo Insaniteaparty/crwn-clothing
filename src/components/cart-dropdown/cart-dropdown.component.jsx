@@ -4,16 +4,17 @@ import {
   EmptyMessage,
 } from "./cart-dropdown.styles";
 
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { CartContext } from "../../contexts/cart.context";
 
 import CustomButton from "../custom-button/custom-botton.component";
 import CartItem from "../cart-item/cart-item.component";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 const CartDropdown = () => {
-  const { cartItems, setIsCartOpen } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
   return (
     <CartDropdownContainer>
@@ -28,7 +29,7 @@ const CartDropdown = () => {
       <CustomButton
         style={{ fontSize: 0.75 + "rem" }}
         onClick={() => {
-          setIsCartOpen(false);
+          dispatch(setIsCartOpen(false));
           navigate("/checkout");
         }}
       >
