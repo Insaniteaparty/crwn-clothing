@@ -26,7 +26,6 @@ const Navigation = () => {
   const [isHomepage, setIsHomepage] = useState(true);
 
   useEffect(() => {
-    console.log("path:", window.location.pathname);
     const isThisAnHomepage = window.location.pathname === "/";
     setIsHomepage(isThisAnHomepage);
   }, [location]);
