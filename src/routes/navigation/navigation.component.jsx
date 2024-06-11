@@ -1,12 +1,8 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { useDispatch, useSelector } from "react-redux";
 
-import CartIcon from "../../components/cart-icon/cart-icon.component";
-
-import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import {
   NavigationContainer,
   LogoContainer,
@@ -14,11 +10,17 @@ import {
   NavLink,
   Leading,
 } from "./navigation.styles";
-import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/user/user.action";
+
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const currentUser = useSelector(selectCurrentUser);
@@ -31,6 +33,9 @@ const Navigation = () => {
   }, [location]);
 
   const navigateBack = () => navigate(-1);
+
+  const signOutUser = () => dispatch(signOutStart());
+
   return (
     <Fragment>
       <NavigationContainer>
@@ -43,12 +48,7 @@ const Navigation = () => {
         <NavLinksContainer>
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink
-              as="span"
-              onClick={async () => {
-                await signOutUser();
-              }}
-            >
+            <NavLink as="span" onClick={signOutUser}>
               SIGN OUT
             </NavLink>
           ) : (

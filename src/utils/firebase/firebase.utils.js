@@ -69,7 +69,7 @@ export const crateUserDocumentFromAuth = async (userAuth, extraInfo = {}) => {
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPsw = async (email, password) => {
@@ -112,4 +112,17 @@ export const getCategoriesAndDocuments = async () => {
 
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((docSnap) => docSnap.data());
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        unsubscribe();
+        resolve(user);
+      },
+      reject
+    );
+  });
 };
