@@ -1,6 +1,4 @@
-import { compose, createStore, applyMiddleware } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
 import { rootReducer } from "./root-reducer";
@@ -9,20 +7,10 @@ const middleWares = [process.env.NODE_ENV === "development" && logger].filter(
   Boolean
 );
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
-
-const persistConfig = {
-  key: "root",
-  storage,
-  blacklist: ["user"],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = createStore(
-  persistedReducer,
-  undefined,
-  composedEnhancers
-);
-
-export const persistor = persistStore(store);
+/** by default, with redux-toolkit the store includes thunk,
+ * but we override it with our own middlewares
+ */
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: middleWares,
+});
