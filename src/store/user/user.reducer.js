@@ -1,16 +1,25 @@
-import USER_ACTION_TYPES from "./user.types";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const USER_INITIAL_STATE = {
   currentUser: null,
 };
 
-export const userReducer = (state = USER_INITIAL_STATE, action = {}) => {
-  const { type, payload } = action;
+/** the actions are actually created by this slice (previously userReducer).
+ * we also do not need the types anymore!
+ */
+export const userSlice = createSlice({
+  name: "user", // namespace for the actions
+  initialState: USER_INITIAL_STATE,
+  reducers: {
+    setCurrentUser(state, action) {
+      /** even if it looks like we're mutating the state,
+       * actually under the hood rtk is creating a new object (immer) to pass to the state
+       */
+      state.currentUser = action.payload;
+    },
+  },
+});
 
-  switch (type) {
-    case USER_ACTION_TYPES.SET_CURRENT_USER:
-      return { ...state, currentUser: payload };
-    default:
-      return state;
-  }
-};
+export const { setCurrentUser } = userSlice.actions;
+
+export const userReducer = userSlice.reducer;
