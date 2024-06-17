@@ -7,7 +7,7 @@ export const USER_INITIAL_STATE = {
 /** the actions are actually created by this slice (previously userReducer).
  * we also do not need the types anymore!
  */
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user", // namespace for the actions
   initialState: USER_INITIAL_STATE,
   reducers: {
