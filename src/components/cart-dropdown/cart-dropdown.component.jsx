@@ -10,7 +10,7 @@ import CustomButton from "../custom-button/custom-botton.component";
 import CartItem from "../cart-item/cart-item.component";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { setIsCartOpen } from "../../store/cart/cart.action";
+import { setIsCartOpen } from "../../store/cart/cart.reducer";
 
 const CartDropdown = () => {
   const dispatch = useDispatch();

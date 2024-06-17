@@ -1,6 +1,0 @@
-const CART_ACTION_TYPES = {
-  SET_IS_OPEN: "SET_IS_OPEN",
-  UPDATE_CART: "UPDATE_CART",
-};
-
-export default CART_ACTION_TYPES;
