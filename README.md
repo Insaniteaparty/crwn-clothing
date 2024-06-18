@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Additional Notes
+
+## Netlify
+
+to mock the release on netlify, we need to add the **netlify-cli** package. Its commands are run with the `netlify` prefix. If that doesn't work on your machine, run this command in the powershell:
+
+`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+
+## To run the project w/ netlify mock
+
+use the command
+
+`netlify dev`
