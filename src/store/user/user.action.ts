@@ -1,7 +1,29 @@
+import { User } from "firebase/auth";
 import { UserData, ExtraInfo } from "../../utils/firebase/firebase.utils";
-import { createAction, withMatcher } from "../../utils/reducer/reducer.utils";
+import {
+  ActionWithPayload,
+  createAction,
+  withMatcher,
+} from "../../utils/reducer/reducer.utils";
 import { USER_ACTION_TYPES } from "./user.types";
 
+/** action types */
+export type EmailSignInStart = ActionWithPayload<
+  USER_ACTION_TYPES.EMAIL_SIGN_IN_START,
+  { email: string; password: string }
+>;
+
+export type SignUpStart = ActionWithPayload<
+  USER_ACTION_TYPES.SIGN_UP_START,
+  { email: string; password: string; displayName: string }
+>;
+
+export type SignUpSuccess = ActionWithPayload<
+  USER_ACTION_TYPES.SIGN_UP_SUCCESS,
+  { user: User; additionalDetails: ExtraInfo }
+>;
+
+/** actions */
 export const setCurrentUser = withMatcher((user: UserData) =>
   createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user)
 );
@@ -14,11 +36,12 @@ export const googleSignInStart = withMatcher(() =>
   createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START)
 );
 
-export const emailSignInStart = withMatcher((email: string, password: string) =>
-  createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password })
+export const emailSignInStart = withMatcher(
+  (email: string, password: string): EmailSignInStart =>
+    createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password })
 );
 
-export const signInSuccess = withMatcher((user: UserData) =>
+export const signInSuccess = withMatcher((user: UserData & { id: string }) =>
   createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user)
 );
 
@@ -36,7 +59,7 @@ export const signUpStart = withMatcher(
 );
 
 export const signUpSuccess = withMatcher(
-  (user: UserData, additionalDetails: ExtraInfo) =>
+  (user: User, additionalDetails: ExtraInfo) =>
     createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails })
 );
 
