@@ -11,10 +11,10 @@ import {
 } from "../../store/categories/categories.selector";
 
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams() as { category: string };
   const categoriesMap = useSelector(selectCategoriesMap);
   const isLoading = useSelector(selectCategoriesIsLoading);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {
     setProducts(categoriesMap[category]);

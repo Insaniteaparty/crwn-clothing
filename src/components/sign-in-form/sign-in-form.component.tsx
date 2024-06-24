@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton, {
@@ -31,24 +32,25 @@ const SignInForm = () => {
     setFormFields(initFields);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
+      const err = error as AuthError;
       if (
-        error.code === "auth/wrong-password" ||
-        error.code === "auth/user-not-found" ||
-        error.code === "auth/invalid-credential"
+        err.code === AuthErrorCodes.INVALID_PASSWORD ||
+        err.code === AuthErrorCodes.USER_DELETED ||
+        err.code === AuthErrorCodes.INVALID_IDP_RESPONSE
       ) {
         alert("Warning: wrong username or password!");
-      } else console.log(error.message);
+      } else console.log(error);
     }
   };
 

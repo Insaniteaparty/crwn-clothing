@@ -9,6 +9,7 @@ import {
   NavLinksContainer,
   NavLink,
   Leading,
+  SignOutButton,
 } from "./navigation.styles";
 
 import { selectCurrentUser } from "../../store/user/user.selector";
@@ -48,9 +49,9 @@ const Navigation = () => {
         <NavLinksContainer>
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={signOutUser}>
+            <SignOutButton as="span" onClick={signOutUser}>
               SIGN OUT
-            </NavLink>
+            </SignOutButton>
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
           )}

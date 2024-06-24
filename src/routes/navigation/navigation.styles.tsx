@@ -31,6 +31,11 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 `;
 
+export const SignOutButton = styled.button`
+  padding: 10px 15px;
+  cursor: pointer;
+`;
+
 export const Leading = styled.div`
   display: flex;
   gap: 2rem;
